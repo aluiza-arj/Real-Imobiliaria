@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real · Diagnóstico Operacional</title>
+<style>
+  :root{
+    --bg:#F5F7FA; --surface:#FFFFFF; --ink:#16213A; --muted:#64748B;
+    --line:#E4E9F0; --accent:#1F7A53; --accent-deep:#124430; --accent-soft:#E4F3EA;
+    --green:#0FA968; --green-soft:#E6F6EF; --amber:#E0A106; --amber-soft:#FDF3DA;
+    --red:#E0393E; --red-soft:#FCE9EA; --gray:#94A3B8; --gray-soft:#EEF1F5;
+    --teal:#0E8C8C; --teal-soft:#E2F4F4;
+    --shadow:0 1px 2px rgba(16,33,64,.06),0 8px 24px rgba(16,33,64,.05);
+    --side:248px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .num{font-variant-numeric:tabular-nums}
+
+  .mobile-topbar{display:none;align-items:center;gap:12px;position:sticky;top:0;z-index:30;background:#0E1F19;color:#fff;padding:12px 16px}
+  .hamburger{width:36px;height:36px;border:0;background:rgba(255,255,255,.14);border-radius:8px;color:#fff;font-size:18px;cursor:pointer;line-height:1}
+  .mobile-topbar .mt{font-size:14px;font-weight:800}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.5);z-index:40}
+
+  aside{position:fixed;top:0;left:0;width:var(--side);height:100vh;background:#0E1F19;
+    color:#C6D9CF;overflow-y:auto;padding:22px 14px 40px}
+  .brand{padding:4px 8px 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px}
+  .brand .b1{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5E9C7C;font-weight:700}
+  .brand .b2{font-size:16px;font-weight:800;color:#fff;margin-top:3px;letter-spacing:-.01em}
+  .brand .b3{font-size:10.5px;color:#5E9C7C;margin-top:5px}
+  .nav-item{display:flex;align-items:center;gap:9px;padding:10px 10px;border-radius:8px;
+    cursor:pointer;font-size:13.5px;color:#C6D9CF;transition:.12s;line-height:1.25;margin-bottom:4px}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-item.active{background:var(--accent);color:#fff;font-weight:600}
+  .nav-item .nm{flex:1;min-width:0}
+  .nav-item .ct{font-size:11px;color:#84B79C;font-variant-numeric:tabular-nums}
+  .nav-item.active .ct{color:#DCEFE4}
+  .side-foot{padding:16px 10px 0;font-size:10.5px;color:#4F8267;border-top:1px solid rgba(255,255,255,.08);margin-top:18px}
+
+  main{margin-left:var(--side);padding:34px 40px 72px;max-width:1120px}
+  .view{display:none}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+
+  .flag{background:var(--accent-soft);border:1px solid #BFE1CE;border-radius:10px;padding:11px 14px;
+    font-size:12.5px;color:var(--accent-deep);margin-bottom:22px;line-height:1.5}
+  .flag b{font-weight:800}
+
+  .tblwrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px}
+  table{width:100%;min-width:640px;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;padding:12px 14px;background:#FAFBFD;border-bottom:1px solid var(--line);font-weight:700}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:12.5px;vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FAFBFD}
+  .t-title{font-weight:600;max-width:320px}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .st-nao{background:#F1F3F7;color:#5A6474}
+  .st-and{background:var(--accent-soft);color:var(--accent-deep)}
+  .pr-Alta{background:var(--red-soft);color:var(--red)}
+  .pr-Média{background:var(--amber-soft);color:#9A6E04}
+  .pr-Baixa{background:var(--green-soft);color:#2E7D46}
+  .pr-none{color:var(--muted);font-size:11px}
+  .late{color:var(--red);font-weight:700} .ontime{color:var(--muted)}
+  .empty-cell{color:var(--gray);font-size:11px}
+
+  .health{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 0 22px}
+  .hcard{border-radius:12px;padding:15px 16px;color:#fff}
+  .hcard .v{font-size:26px;font-weight:800;line-height:1}
+  .hcard .l{font-size:11px;margin-top:6px;font-weight:600;opacity:.95;line-height:1.35}
+  .h-critico{background:var(--red)} .h-vazio{background:var(--gray)}
+  .h-vazio_bom{background:var(--teal)}
+  .h-atencao{background:var(--amber)} .h-ativo{background:var(--green)}
+
+  .procgrid{display:grid;grid-template-columns:1fr;gap:14px}
+  .pcard{background:var(--surface);border:1px solid var(--line);border-left-width:4px;border-radius:14px;
+    padding:18px 20px;box-shadow:var(--shadow)}
+  .pcard.critico{border-left-color:var(--red)} .pcard.vazio{border-left-color:var(--gray)}
+  .pcard.vazio_bom{border-left-color:var(--teal)}
+  .pcard.atencao{border-left-color:var(--amber)} .pcard.ativo{border-left-color:var(--green)}
+  .ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
+  .pname{font-size:14.5px;font-weight:800}
+  .pdesc{font-size:11.5px;color:var(--muted);margin-bottom:12px;min-height:14px}
+  .vbadge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;flex:none}
+  .v-critico{background:var(--red-soft);color:var(--red)} .v-vazio{background:var(--gray-soft);color:#5A6474}
+  .v-vazio_bom{background:var(--teal-soft);color:var(--teal)}
+  .v-atencao{background:var(--amber-soft);color:#9A6E04} .v-ativo{background:var(--green-soft);color:#2E7D46}
+  .pstats{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .pstats b{color:var(--ink);font-size:13px;margin-right:3px}
+  .stagelist{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .stagechip{display:inline-flex;align-items:baseline;gap:5px;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:7px;white-space:nowrap}
+  .stagechip .n{font-weight:800;font-variant-numeric:tabular-nums}
+  .chip-zero{background:#F7F8FA;color:#C2CAD6}
+  .chip-neutro{background:#EEF1F5;color:#5A6474}
+  .chip-ativo{background:var(--accent-soft);color:var(--accent-deep)}
+  .chip-conclu{background:var(--green-soft);color:#2E7D46}
+  .chip-neg{background:var(--red-soft);color:var(--red)}
+  .pdiag{font-size:12px;color:var(--ink);line-height:1.5;background:#FAFBFD;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+
+  @media(max-width:880px){
+    .mobile-topbar{display:flex}
+    aside{transform:translateX(-100%);transition:.2s;z-index:50}
+    body.nav-open aside{transform:translateX(0)}
+    body.nav-open .overlay{display:block}
+    main{margin-left:0;padding:20px 16px 56px}
+    .health{grid-template-columns:repeat(2,1fr)}
+    .procgrid{grid-template-columns:1fr}
+    table{font-size:11.5px}
+    .t-title{max-width:160px}
+  }
+</style>
+</head>
+<body>
+
+<div class="mobile-topbar">
+  <button class="hamburger" id="hamburger">☰</button>
+  <span class="mt">Real · Diagnóstico Operacional</span>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<aside>
+  <div class="brand">
+    <div class="b1">Diagnóstico Operacional</div>
+    <div class="b2">Real Imobiliária</div>
+    <div class="b3">Fonte: Notion (capturas de tela) · 20/07/2026</div>
+  </div>
+  <div class="nav-item active" data-view="tarefas"><span class="nm">Tarefas</span><span class="ct num">7</span></div>
+  <div class="nav-item" data-view="fluxos"><span class="nm">Resumo dos Processos</span><span class="ct num">11</span></div>
+  <div class="side-foot">Dados capturados manualmente — a Real não usa Apresenta.me, e a integração de Notion não tem acesso ao workspace da Real (acesso de convidada).</div>
+</aside>
+
+<main>
+
+  <div class="view" id="view-tarefas" style="display:block">
+    <div class="eyebrow">Agenda · Tarefas</div>
+    <h1>Tarefas</h1>
+    <div class="sub">7 tarefas ativas (Não iniciada + Em andamento) · lidas em 20/07/2026</div>
+    <div class="tblwrap">
+    <table>
+      <thead><tr><th>Status</th><th>Responsável</th><th>Tarefa</th><th>Prioridade</th><th>Área</th><th>Prazo</th></tr></thead>
+      <tbody id="tarefas-body"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="view" id="view-fluxos">
+    <div class="eyebrow">Construção · Processos</div>
+    <h1>Resumo dos Processos</h1>
+    <div class="sub">11 fluxos mapeados no Notion da Real · leitura por volume/concentração (sem histórico de dias parado ainda) · 20/07/2026</div>
+    <div class="flag"><b>Sobre esta leitura:</b> classificação de saúde por volume e concentração de cards por fase — ainda não há uma leitura anterior para comparar dias parado. A partir da próxima atualização passamos a acompanhar isso.</div>
+    <div class="health" id="health"></div>
+    <div class="procgrid" id="procgrid"></div>
+  </div>
+
+</main>
+
+<script>
+const TAREFAS=[
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Corrigir SEO das Páginas Do Blog",prio:"Baixa",area:"Marketing",prazo:null},
+ {status:"Em andamento",resp:"Vitor Rodrigues",tarefa:"Relatório IPTU",prio:"Média",area:"",prazo:"2026-04-14"},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Refazer fotos venda kit Avenida Shopping",prio:"Baixa",area:"Marketing",prazo:null},
+ {status:"Em andamento",resp:"Valter",tarefa:"Registro da Marca ©",prio:"Média",area:"Jurídico",prazo:null},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Linkedin",prio:"Média",area:"Marketing",prazo:null},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Contrato locação",prio:"",area:"",prazo:null},
+ {status:"Em andamento",resp:"Vitor Rodrigues +1",tarefa:"Revisar Contrato Administração",prio:"Baixa",area:"Jurídico",prazo:null}
+];
+
+const FLOWS=[
+ {nome:"Anúncio Comercial",desc:"Fluxo dos anúncios dos imóveis",saude:"ativo",
+  stages:[["Não iniciada",0],["Nova Solicitação",0],["Avaliação Técnica",0],["Cadastro e Anúncio",0],["Finalização Anúncio",2],["Atualização do Marketing",1],["Concluído",6]],
+  diag:"2 em Finalização de Anúncio, 1 em Atualização do Marketing, 6 concluídos nesta leitura."},
+ {nome:"Captação",desc:"Processo para captação de imóveis",saude:"atencao",
+  stages:[["Não iniciada",3],["Novo Lead",0],["Primeiro Contato",11],["Follow-up",5],["Encerramento",0],["Qualificado",0],["Desqualificado",3],["Concluído",0]],
+  diag:"11 parados em Primeiro Contato e 5 em Follow-up — nenhum avançou para Qualificado ou Concluído nesta leitura."},
+ {nome:"Comprador (Funil de Vendas)",desc:"",saude:"atencao",
+  stages:[["Não iniciada",3],["Coleta de Perfil",2],["Busca de Imóveis",1],["Aguardando Feedback",0],["Visitas",1],["Perdido",0],["Concluído",0]],
+  diag:"7 leads no funil nesta leitura, nenhum concluído."},
+ {nome:"Inadimplência",desc:"Processos dos inquilinos que estão com aluguel atrasado.",saude:"atencao",
+  stages:[["Cobranças a fazer",0],["Primeiro Contato",0],["Segundo Contato",1],["Terceiro Contato",1],["Quarto Contato",0],["Quinto Contato",0],["Sexto Contato",0],["Garantia Acionada",0],["Jurídico",1],["Concluído",1]],
+  diag:"1 caso em fase Jurídico. 2 comentários da Real registrados no board (18/06 e 02/07), sem resposta registrada até a leitura."},
+ {nome:"Manutenção",desc:"Fluxo dos pedidos de manutenções e reparos",saude:"ativo",
+  stages:[["Não iniciada",1],["Orçamento",1],["Aprovação do Proprietário",2],["Agendamento",0],["Verificação",0],["Financeiro",0],["Concluído",10]],
+  diag:"10 concluídos, 4 em andamento (orçamento/aprovação) nesta leitura."},
+ {nome:"Marketing",desc:"",saude:"ativo",
+  stages:[["Não iniciada",1],["Solicitação",1],["Produção",2],["Finalização",0],["Publicação",1],["Concluído",15]],
+  diag:"15 concluídos, 5 em produção/publicação nesta leitura."},
+ {nome:"Nova Administração",desc:"",saude:"vazio",
+  stages:[["Não iniciada",3],["Recebimento da Documentação",0],["Análise Documental",0],["Cadastramento",0],["Locado/Desocupado",0],["Assinatura do Contrato",0],["Certidões Negativas",0],["Finalização",0],["Concluído",0]],
+  diag:"Só os 3 cards de template (Versão 1.0/2.0/3.0) — sem administração real em andamento nesta leitura."},
+ {nome:"Nova Locação",desc:"",saude:"vazio_bom",
+  stages:[["Não iniciada",0],["Análise",0],["Cadastro",0],["Seguro Incêndio",0],["Preparação",0],["Entrega das chaves",0],["Troca de titularidade",0],["Desistência",0],["Concluído",7]],
+  diag:"7 concluídos, nenhum caso parado em fase intermediária. 3 comentários da Real registrados no board."},
+ {nome:"Renovação",desc:"Processo de atualização do valor do aluguel.",saude:"critico",
+  stages:[["Contratos a renovar",0],["Triagem",0],["Calcular valores",0],["Conversar com Inquilino",2],["Atualizar sistema",0],["Seguro Incêndio (Valor Mercado)",1],["Aditivo",1],["Atualização dos Encargos",0],["Pagamento do seguro",0],["Registro da apólice",0],["Revisão final",11],["Concluído",5]],
+  diag:"11 dos 20 casos ativos concentrados em Revisão Final — maior acúmulo do board. 2 comentários da Real registrados."},
+ {nome:"Rescisão de Locação (Desocupação)",desc:"Fluxo de encerramento do contrato de locação com o inquilino",saude:"ativo",
+  stages:[["Novas Solicitações",1],["Vistoria",2],["Entrega das chaves",0],["Orçamento de pendências",0],["Levantamento de taxas",0],["Fechamento financeiro",1],["Finalizar procedimentos",0],["Concluído",4]],
+  diag:"4 concluídos, todos os casos ativos sob responsabilidade de Patrícia nesta leitura."},
+ {nome:"Venda",desc:"",saude:"vazio",
+  stages:[["Não iniciada",1],["Em andamento",0],["Concluído",0]],
+  diag:"Só o card de template (\"Nova página\") — sem venda em andamento nesta leitura."}
+];
+
+const HL={critico:"Crítico",vazio:"Vazio",vazio_bom:"Vazio (bom)",atencao:"Em atenção",ativo:"Ativo"};
+
+function fmtDate(iso){
+  if(!iso)return null;
+  const [y,m,d]=iso.split("-");
+  return `${d}/${m}/${y}`;
+}
+function isLate(iso){
+  if(!iso)return false;
+  return new Date(iso) < new Date("2026-07-20");
+}
+
+document.getElementById("tarefas-body").innerHTML=TAREFAS.map(t=>{
+  const stCls=t.status==="Em andamento"?"st-and":"st-nao";
+  const prCls=t.prio?`pr-${t.prio}`:"pr-none";
+  let prazoHTML='<span class="empty-cell">—</span>';
+  if(t.prazo){
+    const late=isLate(t.prazo);
+    prazoHTML=`<span class="${late?'late':'ontime'}">${fmtDate(t.prazo)}${late?' · atrasado':''}</span>`;
+  }
+  return `<tr>
+    <td><span class="badge ${stCls}">${t.status}</span></td>
+    <td>${t.resp}</td>
+    <td class="t-title">${t.tarefa}</td>
+    <td>${t.prio?`<span class="badge ${prCls}">${t.prio}</span>`:'<span class="empty-cell">—</span>'}</td>
+    <td>${t.area||'<span class="empty-cell">—</span>'}</td>
+    <td>${prazoHTML}</td>
+  </tr>`;
+}).join("");
+
+const hcount={critico:0,vazio:0,vazio_bom:0,atencao:0,ativo:0};
+FLOWS.forEach(f=>hcount[f.saude]++);
+document.getElementById("health").innerHTML=[
+ ["critico","Crítico","maior concentração/gargalo"],
+ ["atencao","Em atenção","acúmulo sem avanço"],
+ ["ativo","Ativos","movimento saudável"],
+ ["vazio_bom","Vazio (bom)","sem saídas pendentes"],
+ ["vazio","Vazio","sem cards reais"]
+].map(([k,l,s])=>`<div class="hcard h-${k}"><div class="v num">${hcount[k]}</div><div class="l">${l}<br>${s}</div></div>`).join("");
+
+function stageCat(name,count){
+  const n=name.toLowerCase();
+  if(count===0)return "zero";
+  if(n.includes("conclu"))return "conclu";
+  if(n.includes("desist")||n.includes("perdid")||n.includes("desqualific"))return "neg";
+  if(n.includes("não inici"))return "neutro";
+  return "ativo";
+}
+
+document.getElementById("procgrid").innerHTML=FLOWS.map(f=>{
+  const total=f.stages.reduce((a,s)=>a+s[1],0);
+  const concl=f.stages.filter(s=>s[0].toLowerCase().includes("conclu")).reduce((a,s)=>a+s[1],0);
+  const ativos=total-concl;
+  const chips=f.stages.map(([n,c])=>`<span class="stagechip chip-${stageCat(n,c)}"><span class="n">${c}</span>${n}</span>`).join("");
+  return `<div class="pcard ${f.saude}">
+    <div class="ptop"><div class="pname">${f.nome}</div><span class="vbadge v-${f.saude}">${HL[f.saude]}</span></div>
+    <div class="pdesc">${f.desc||''}</div>
+    <div class="pstats"><div><b>${total}</b>total</div><div><b>${ativos}</b>ativos</div><div><b>${concl}</b>concluídos</div></div>
+    <div class="stagelist">${chips}</div>
+    <div class="pdiag">${f.diag}</div>
+  </div>`;
+}).join("");
+
+function showView(view){
+  document.querySelectorAll(".view").forEach(v=>v.style.display="none");
+  document.getElementById("view-"+view).style.display="block";
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===view));
+  document.body.classList.remove("nav-open");
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav-item").forEach(n=>n.addEventListener("click",()=>showView(n.dataset.view)));
+document.getElementById("hamburger").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
+document.getElementById("overlay").addEventListener("click",()=>document.body.classList.remove("nav-open"));
+</script>
+</body>
+</html>
