@@ -8,10 +8,11 @@
   :root{
     --bg:#F5F7FA; --surface:#FFFFFF; --ink:#16213A; --muted:#64748B;
     --line:#E4E9F0; --accent:#1F7A53; --accent-deep:#124430; --accent-soft:#E4F3EA;
-    --green:#0FA968; --green-soft:#E6F6EF; --amber:#E0A106; --amber-soft:#FDF3DA;
+    --blue:#2563EB; --blue-soft:#E7EEFE; --link:#26406B;
+    --amber:#E0A106; --amber-soft:#FDF3DA; --amber-ink:#8A6304;
     --red:#E0393E; --red-soft:#FCE9EA; --gray:#94A3B8; --gray-soft:#EEF1F5;
     --teal:#0E8C8C; --teal-soft:#E2F4F4;
-    --shadow:0 1px 2px rgba(16,33,64,.05),0 10px 28px rgba(16,33,64,.06);
+    --shadow:0 1px 2px rgba(16,33,64,.04),0 12px 30px rgba(16,33,64,.06);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -19,108 +20,134 @@
     font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
   .num{font-variant-numeric:tabular-nums}
 
-  /* ---- topo ---- */
   header{background:#0E1F19;color:#fff;padding:20px 40px}
-  .hwrap{max-width:1240px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .hwrap{max-width:1280px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .b1{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#5E9C7C;font-weight:700}
   .b2{font-size:20px;font-weight:800;color:#fff;margin-top:3px;letter-spacing:-.01em}
   .hmeta{font-size:11.5px;color:#9CC2AE;text-align:right;line-height:1.6}
   .hmeta b{color:#fff;font-weight:700}
 
-  main{max-width:1240px;margin:0 auto;padding:30px 40px 60px}
-  section{margin-bottom:38px}
+  main{max-width:1280px;margin:0 auto;padding:30px 40px 60px}
+  section{margin-bottom:40px}
   .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
   h2{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
   .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
-  .divider{height:1px;background:var(--line);margin:0 0 30px}
+  .divider{height:1px;background:var(--line);margin:0 0 34px}
 
-  .flag{background:var(--accent-soft);border:1px solid #BFE1CE;border-radius:10px;padding:11px 14px;
-    font-size:12.5px;color:var(--accent-deep);margin-bottom:20px;line-height:1.5}
-  .flag b{font-weight:800}
+  /* ---- filtros de tarefas ---- */
+  .filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;
+    padding:7px 16px;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;transition:.12s}
+  .chip:hover{border-color:#C9D4E2}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .spacer{flex:1}
+  select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;
+    font-size:12.5px;color:var(--ink);font-family:inherit;cursor:pointer}
+
+  /* ---- tabela de tarefas ---- */
+  .tblwrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{width:100%;min-width:760px;border-collapse:collapse;background:var(--surface);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);
+    text-align:left;padding:14px 18px;background:#FAFBFD;border-bottom:1px solid var(--line);font-weight:700}
+  tbody td{padding:15px 18px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#FAFBFD}
+  .t-name{font-weight:700;line-height:1.35;max-width:420px}
+  .t-obs{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4;max-width:420px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:8px;white-space:nowrap}
+  .st-and{background:var(--blue-soft);color:var(--blue)}
+  .st-nao{background:var(--gray-soft);color:#5A6474}
+  .pr-Alta{background:var(--red-soft);color:var(--red)}
+  .pr-Média{background:var(--amber-soft);color:var(--amber-ink)}
+  .pr-Baixa{background:var(--accent-soft);color:var(--accent-deep)}
+  .atraso{color:var(--red);font-weight:800}
+  .dash{color:var(--gray)}
+  .newtag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:2px 6px;
+    border-radius:5px;background:var(--accent-soft);color:var(--accent-deep);margin-left:7px;vertical-align:2px}
+  .tblfoot{font-size:11.5px;color:var(--muted);margin-top:10px}
 
   /* ---- faixa de leitura ---- */
   .reading{background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    box-shadow:var(--shadow);padding:18px 22px;margin-bottom:16px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
   .rd .rl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .rd .rv{font-size:24px;font-weight:800;line-height:1.15;margin-top:5px;letter-spacing:-.02em}
+  .rd .rv{font-size:24px;font-weight:800;line-height:1.15;margin-top:6px;letter-spacing:-.02em}
   .rd .rs{font-size:11.5px;color:var(--muted);margin-top:2px}
-  .rv.g{color:var(--accent)} .rv.r{color:var(--red)}
+  .rv.g{color:var(--accent)}
 
-  /* ---- cartões (base comum) ---- */
-  .cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
-  .pcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  .flag{background:var(--accent-soft);border:1px solid #BFE1CE;border-radius:10px;padding:11px 14px;
+    font-size:12.5px;color:var(--accent-deep);margin-bottom:22px;line-height:1.5}
+  .flag b{font-weight:800}
+
+  /* ---- cartões de processo (layout da referência) ---- */
+  .procgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(372px,1fr));gap:20px}
+  .pcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;
     box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
   .ptopbar{height:3px}
-  .pbody{padding:18px 20px 0}
-  .ptop{display:flex;align-items:center;gap:8px;margin-bottom:3px}
-  .dot{width:8px;height:8px;border-radius:50%;flex:none}
-  .pname{font-size:15px;font-weight:800;flex:1;min-width:0;letter-spacing:-.01em}
-  .vbadge{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;flex:none}
-  .pdesc{font-size:11.5px;color:var(--muted);margin:0 0 16px;min-height:15px;line-height:1.4}
-  .lbl{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.35}
-
-  /* ---- tarefas por responsável ---- */
-  .person .ptopbar{background:var(--accent)}
-  .person .pbody{padding-bottom:6px}
-  .v-count{background:var(--accent-soft);color:var(--accent-deep)}
-  .v-count.late{background:var(--red-soft);color:var(--red)}
-  .tasklist{list-style:none;margin:10px 0 0;padding:0}
-  .trow{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
-  .trow:first-child{border-top:0;padding-top:4px}
-  .tdot{width:7px;height:7px;border-radius:50%;flex:none;margin-top:6px;background:var(--gray)}
-  .tdot.and{background:var(--accent)}
-  .tname{font-size:13px;font-weight:600;line-height:1.35}
-  .tmeta{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
-  .tmeta .late{color:var(--red);font-weight:700}
-  .newtag{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:var(--accent-soft);color:var(--accent-deep);margin-left:6px;vertical-align:1px}
-  .pfoot{padding:12px 20px 14px;border-top:1px solid var(--line);background:#FAFBFD;margin-top:auto;
-    font-size:11.5px;color:var(--muted);line-height:1.45}
-
-  /* ---- cartões de processo ---- */
   .critico .ptopbar{background:var(--red)} .vazio .ptopbar{background:var(--gray)}
   .vazio_bom .ptopbar{background:var(--teal)}
   .atencao .ptopbar{background:var(--amber)} .ativo .ptopbar{background:var(--accent)}
+  .pbody{padding:24px 26px 22px;display:flex;flex-direction:column;height:100%}
+  .ptop{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
   .critico .dot{background:var(--red)} .vazio .dot{background:var(--gray)}
   .vazio_bom .dot{background:var(--teal)}
   .atencao .dot{background:var(--amber)} .ativo .dot{background:var(--accent)}
+  .pname{font-size:16.5px;font-weight:800;flex:1;min-width:0;letter-spacing:-.015em}
+  .vbadge{font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+    padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
   .v-critico{background:var(--red-soft);color:var(--red)} .v-vazio{background:var(--gray-soft);color:#5A6474}
   .v-vazio_bom{background:var(--teal-soft);color:var(--teal)}
-  .v-atencao{background:var(--amber-soft);color:#9A6E04} .v-ativo{background:var(--accent-soft);color:var(--accent-deep)}
+  .v-atencao{background:var(--amber-soft);color:var(--amber-ink)} .v-ativo{background:var(--accent-soft);color:var(--accent-deep)}
+  .pdesc{font-size:12px;color:var(--muted);margin:0 0 22px;line-height:1.45;min-height:17px}
 
-  .prow{display:flex;gap:18px;align-items:flex-start;padding-bottom:16px}
+  .lbl{font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);line-height:1.4}
+  .prow{display:flex;gap:20px;align-items:flex-start;margin-bottom:26px}
   .pleft{flex:1;min-width:0}
-  .pright{text-align:right;flex:none;max-width:44%}
-  .stagelines{list-style:none;margin:9px 0 0;padding:0}
-  .stagelines li{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--ink);margin-bottom:5px;line-height:1.3}
+  .pright{text-align:right;flex:none;max-width:46%}
+  .stagelines{list-style:none;margin:10px 0 0;padding:0}
+  .stagelines li{display:flex;align-items:baseline;gap:9px;font-size:12.5px;margin-bottom:6px;line-height:1.35}
   .stagelines .n{font-weight:800;font-variant-numeric:tabular-nums;min-width:20px;text-align:right;color:var(--accent-deep)}
   .stagelines li.hot .n{color:var(--red)}
   .stagelines li.tpl{color:var(--muted)}
-  .stagelines .sn{min-width:0}
-  .bignum{font-size:25px;font-weight:800;line-height:1.1;margin-top:7px;letter-spacing:-.02em}
-  .bignum .unit{font-size:13px;font-weight:600;color:var(--muted);margin-left:5px;letter-spacing:0}
-  .bigsub{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .bignum{font-size:27px;font-weight:800;line-height:1.1;margin-top:8px;letter-spacing:-.025em}
+  .bignum .unit{font-size:13.5px;font-weight:600;color:var(--muted);margin-left:5px;letter-spacing:0}
+  .bigsub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
 
-  .pmove{border-top:1px solid var(--line);background:#FAFBFD;padding:15px 20px 18px;margin-top:auto}
-  .mvhead{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-top:7px;line-height:1.15}
-  .mv-pos{color:var(--accent)} .mv-zero{color:var(--muted)} .mv-none{color:var(--gray)}
-  .deltas{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
-  .dchip{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:#EDF1F6;color:#4A5568;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .dchip.up{background:var(--amber-soft);color:#8A6304}
-  .dchip.down{background:#E8EDF3;color:#4A5568}
+  .pmove{margin-top:auto;padding-top:4px}
+  .mvhead{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-top:8px;line-height:1.15}
+  .mv-pos{color:var(--accent)} .mv-zero{color:var(--ink)} .mv-none{color:var(--gray)}
+  .deltas{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .dchip{font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px;background:#EEF1F6;color:#4A5568;
+    white-space:nowrap;font-variant-numeric:tabular-nums}
+  .dchip.up{background:var(--amber-soft);color:var(--amber-ink)}
   .dchip.done{background:var(--accent-soft);color:var(--accent-deep)}
-  .pdiag{font-size:12px;color:var(--ink);line-height:1.5;margin-top:11px}
-  .pnote{font-size:11px;color:var(--muted);line-height:1.45;margin-top:7px;padding-top:8px;border-top:1px dashed var(--line)}
+  .pnote{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:13px}
 
-  .footnote{font-size:11.5px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding-top:16px}
+  .plink{margin-top:20px}
+  .plink button{background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:700;
+    color:var(--link);cursor:pointer;border-bottom:1.5px solid var(--link);line-height:1.6}
+  .plink button:hover{opacity:.7}
+  .caselist{list-style:none;margin:16px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:none}
+  .caselist.open{display:block}
+  .caselist li{margin-bottom:12px;line-height:1.4}
+  .caselist li:last-child{margin-bottom:0}
+  .cfase{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .cnome{font-size:13px;font-weight:700;margin-top:2px}
+  .cextra{font-size:11.5px;color:var(--muted);margin-top:1px}
+
+  .footnote{font-size:11.5px;color:var(--muted);line-height:1.55;border-top:1px solid var(--line);padding-top:18px}
 
   @media(max-width:880px){
-    header{padding:16px 16px}
+    header{padding:16px}
     .hwrap{align-items:flex-start;gap:10px}
     .hmeta{text-align:left}
     main{padding:22px 16px 48px}
-    .reading{grid-template-columns:repeat(2,1fr);gap:14px}
-    .cardgrid{grid-template-columns:1fr}
+    .reading{grid-template-columns:repeat(2,1fr);gap:16px}
+    .procgrid{grid-template-columns:1fr}
+    .spacer{display:none}
+    select{width:100%}
   }
 </style>
 </head>
@@ -143,9 +170,29 @@
 
   <section>
     <div class="eyebrow">Agenda · Tarefas</div>
-    <h2>Tarefas por responsável</h2>
+    <h2>Tarefas</h2>
     <div class="sub" id="tarefas-sub"></div>
-    <div class="cardgrid" id="peoplegrid"></div>
+
+    <div class="filters">
+      <div id="chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <div class="spacer"></div>
+      <select id="fstatus">
+        <option value="">Todos os status (ativas)</option>
+        <option value="Em andamento">Em andamento</option>
+        <option value="Não iniciada">Não iniciada</option>
+      </select>
+    </div>
+
+    <div class="tblwrap">
+      <table>
+        <thead><tr>
+          <th id="th-tarefa">Tarefa</th><th>Responsável</th><th>Status</th>
+          <th>Prioridade</th><th>Prazo</th><th>Atraso</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="tblfoot">A base da Real não traz data de conclusão, então esta leitura mostra só as tarefas ativas — sem a aba de concluídas na semana.</div>
   </section>
 
   <div class="divider"></div>
@@ -157,9 +204,9 @@
 
     <div class="reading" id="reading"></div>
 
-    <div class="flag"><b>Sobre esta leitura:</b> segunda leitura dos quadros. Cada cartão mostra onde os casos estão hoje e o que mudou em relação a 20/07. As contagens incluem cards de template (“Versão 1.0”, “Nova página”, “Modelo 1”), sinalizados no cartão do fluxo correspondente.</div>
+    <div class="flag"><b>Sobre esta leitura:</b> segunda leitura dos quadros. Cada cartão mostra onde os casos estão hoje, o que mudou em relação a 20/07 e a lista dos cards em andamento. As contagens incluem cards de template (“Versão 1.0”, “Nova página”, “Modelo 1”), sinalizados em cada cartão.</div>
 
-    <div class="cardgrid" id="procgrid"></div>
+    <div class="procgrid" id="procgrid"></div>
   </section>
 
   <div class="footnote">Dados capturados manualmente — a Real não usa Apresenta.me, e a integração de Notion não tem acesso ao workspace da Real (acesso de convidada).</div>
@@ -170,74 +217,131 @@
 const HOJE="2026-07-27";
 
 const TAREFAS=[
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Corrigir SEO das Páginas Do Blog",prio:"Baixa",area:"Marketing",prazo:null,nova:false},
- {status:"Em andamento",resp:"Vitor Rodrigues",tarefa:"Relatório IPTU",prio:"Média",area:"",prazo:"2026-04-14",nova:false},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Refazer fotos venda kit Avenida Shopping",prio:"Baixa",area:"Marketing",prazo:null,nova:false},
- {status:"Em andamento",resp:"Valter",tarefa:"Registro da Marca ©",prio:"Média",area:"Jurídico",prazo:null,nova:false},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Criar pagina Boas Vindas Locatario Guia",prio:"Baixa",area:"",prazo:null,nova:true},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Linkedin",prio:"Média",area:"Marketing",prazo:null,nova:false},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Contrato locação",prio:"",area:"",prazo:null,nova:false},
- {status:"Em andamento",resp:"Vitor Rodrigues",extra:"+1 responsável no card",tarefa:"Revisar Contrato Administração",prio:"Baixa",area:"Jurídico",prazo:null,nova:false}
+ {tarefa:"Corrigir SEO das Páginas Do Blog",obs:"",resp:"Vitor Rodrigues",status:"Não iniciada",prio:"Baixa",area:"Marketing",prazo:null},
+ {tarefa:"Relatório IPTU",obs:"",resp:"Vitor Rodrigues",status:"Em andamento",prio:"Média",area:"",prazo:"2026-04-14"},
+ {tarefa:"Refazer fotos venda kit Avenida Shopping",obs:"",resp:"Vitor Rodrigues",status:"Não iniciada",prio:"Baixa",area:"Marketing",prazo:null},
+ {tarefa:"Registro da Marca ©",obs:"",resp:"Valter",status:"Em andamento",prio:"Média",area:"Jurídico",prazo:null},
+ {tarefa:"Criar pagina Boas Vindas Locatario Guia",obs:"",resp:"Vitor Rodrigues",status:"Não iniciada",prio:"Baixa",area:"",prazo:null,nova:true},
+ {tarefa:"Atualizar Linkedin",obs:"",resp:"Vitor Rodrigues",status:"Não iniciada",prio:"Média",area:"Marketing",prazo:null},
+ {tarefa:"Atualizar Contrato locação",obs:"",resp:"Vitor Rodrigues",status:"Não iniciada",prio:"",area:"",prazo:null},
+ {tarefa:"Revisar Contrato Administração",obs:"Card com 2 responsáveis no Notion.",resp:"Vitor Rodrigues",status:"Em andamento",prio:"Baixa",area:"Jurídico",prazo:null}
 ];
 
-/* stages: [nome, contagem em 20/07, contagem em 27/07] */
+/* stages: [nome, contagem em 20/07, contagem em 27/07] · casos: cards em andamento lidos nos quadros */
 const FLOWS=[
  {nome:"Anúncio Comercial",desc:"Fluxo dos anúncios dos imóveis",saude:"ativo",
   stages:[["Não iniciada",0,0],["Nova Solicitação",0,0],["Avaliação Técnica",0,0],["Cadastro e Anúncio",0,0],["Finalização Anúncio",2,2],["Atualização do Marketing",1,1],["Concluído",6,7]],
-  diag:"Um anúncio foi concluído na semana. As fases de Finalização e Atualização do Marketing seguem com a mesma quantidade de cards da leitura anterior."},
+  casos:[["Finalização Anúncio","Texas vovó",""],
+         ["Finalização Anúncio","CT00179","SQN 111 Bloco F APTO 306 · R$ 6.416,85"],
+         ["Atualização do Marketing","Asa Sul Mauricio",""]]},
 
  {nome:"Captação",desc:"Processo para captação de imóveis",saude:"atencao",
   stages:[["Não iniciada",3,3],["Novo Lead",0,0],["Primeiro Contato",11,13],["Follow-up",5,5],["Encerramento",0,0],["Qualificado",0,0],["Desqualificado",3,3],["Concluído",0,0]],
   hot:["Primeiro Contato"],
-  diag:"Primeiro Contato passou de 11 para 13. Follow-up continua com 5. Qualificado e Concluído seguem zerados nas duas leituras.",
-  note:"Inclui 1 card de template (“Modelo 1”) em Não iniciada. Desqualificado: 3 cards, sem alteração."},
+  note:"Inclui 2 cards de template: “Modelo 1” em Não iniciada e “Versão 1” em Primeiro Contato. Desqualificado: 3 cards, sem alteração.",
+  casos:[["Não iniciada","Modelo 1","card de template"],
+         ["Não iniciada","Cláudia","SHCES Q 807 BL B · prédio da Lia"],
+         ["Não iniciada","Cláudia","SHCES 807 B 202 · apartamento prédio da Lia"],
+         ["Primeiro Contato","Clea Jaine","CLSW 100 bloco A lj 03 · loja à venda"],
+         ["Primeiro Contato","Fabiana (classificados Caixa)","216 Norte · apartamento 1 quarto"],
+         ["Primeiro Contato","José (Caixa)","Cittá Residence Águas Claras"],
+         ["Primeiro Contato","Roberto","SRES Quadra 4 Bloco T Cruzeiro Velho"],
+         ["Primeiro Contato","Nilza","SHCES 1109 bloco D"],
+         ["Primeiro Contato","Leonardo (classificados Caixa)","Guará I · anunciado no wimóveis há 151 dias"],
+         ["Primeiro Contato","Felipe Fernandes (Caixa)","Residencial Florence — Águas Claras, quadra 203"],
+         ["Primeiro Contato","Samir (Caixa)","101 Bloco I — Sudoeste"],
+         ["Primeiro Contato","Silas (Caixa)","Bouganville Águas Claras"],
+         ["Primeiro Contato","Anna Luisa (Caixa)",""],
+         ["Primeiro Contato","Versão 1","card de template"],
+         ["Primeiro Contato","Carolina","SQN 116 Bl E apt 112"],
+         ["Primeiro Contato","Cláudio","QRSW 3 A5 — sudoeste econômico"],
+         ["Follow-up","Nazaré","CLSW 301 BL B 103"],
+         ["Follow-up","Cícero","SHCES Quadra 407 Bloco E"],
+         ["Follow-up","Ecila","SHCES Quadra 1109 Bloco H"],
+         ["Follow-up","Rodrigo","SHCES Quadra 1405 Bloco F"],
+         ["Follow-up","Fernanda","SHCES 707 B"]]},
 
  {nome:"Comprador (Funil de Vendas)",desc:"",saude:"atencao",
   stages:[["Não iniciada",3,3],["Coleta de Perfil",2,4],["Busca de Imóveis",1,1],["Aguardando Feedback",0,0],["Visitas",1,1],["Perdido",0,0],["Concluído",0,0]],
-  diag:"Coleta de Perfil passou de 2 para 4. As demais fases seguem iguais e nenhum lead foi concluído nas duas leituras.",
-  note:"Inclui 1 card de template (“Versão 1”) em Não iniciada."},
+  note:"Inclui 1 card de template (“Versão 1”) em Não iniciada.",
+  casos:[["Não iniciada","Versão 1","card de template"],
+         ["Não iniciada","Maria Dinet",""],
+         ["Não iniciada","ari",""],
+         ["Coleta de Perfil","Neuza Ferreira",""],
+         ["Coleta de Perfil","Lary",""],
+         ["Coleta de Perfil","Bruno",""],
+         ["Coleta de Perfil","Luis","para um cliente dele"],
+         ["Busca de Imóveis","Peniel Rocha",""],
+         ["Visitas","Luiza",""]]},
 
  {nome:"Inadimplência",desc:"Processos dos inquilinos que estão com aluguel atrasado.",saude:"atencao",
   stages:[["Cobranças a fazer",0,0],["Primeiro Contato",0,0],["Segundo Contato",1,0],["Terceiro Contato",1,1],["Quarto Contato",0,0],["Quinto Contato",0,0],["Sexto Contato",0,0],["Garantia Acionada",0,0],["Jurídico",1,1],["Concluído",1,2]],
   hot:["Jurídico"],
-  diag:"Dois casos aparecem como concluídos, com registro de pagamento no card. O Segundo Contato zerou. Segue 1 caso em Jurídico — o card registra pendência desde janeiro de 2026 e processo de despejo aberto.",
-  note:"2 comentários da Real no quadro (18/06 e 02/07), sem resposta registrada até esta leitura."},
+  note:"2 comentários da Real no quadro (18/06 e 02/07), sem resposta registrada até esta leitura.",
+  casos:[["Terceiro Contato","CT00257","Rua 33, Lote 09 Apto 1206 · 25/06/2026"],
+         ["Jurídico","CT00210","SHCES Quadra 609 Bloco C APTO 406 · 10/01/2026 · card registra processo de despejo aberto"]]},
 
  {nome:"Manutenção",desc:"Fluxo dos pedidos de manutenções e reparos",saude:"ativo",
   stages:[["Não iniciada",1,2],["Orçamento",1,3],["Aprovação do Proprietário",2,2],["Agendamento",0,0],["Verificação",0,0],["Financeiro",0,0],["Concluído",10,13]],
-  diag:"Três pedidos foram concluídos na semana. Orçamento passou de 1 para 3 e Aprovação do Proprietário segue com 2.",
-  note:"Inclui 1 card de template (“Nova página”) em Não iniciada."},
+  note:"Inclui 1 card de template (“Nova página”) em Não iniciada.",
+  casos:[["Não iniciada","CT00330","Quadra QNO 6 Conjunto I, casa 01"],
+         ["Não iniciada","Nova página","card de template"],
+         ["Orçamento","CT00166","Rua 5 Lote 01 Apto 511, Residencial Shangrilá · 24/07/2026 10:30"],
+         ["Orçamento","CT00037","CLSW 301 Bloco B Kit 105"],
+         ["Orçamento","CT00179","SQN 111 Bloco F Apto 306"],
+         ["Aprovação do Proprietário","CT00365","CLSW 301 Bloco C kit 109 · 21/07/2026 10:00"],
+         ["Aprovação do Proprietário","CT00341","Quadra 43 Lote 62 52 — fundos · 31/07/2026 09:00"]]},
 
  {nome:"Marketing",desc:"",saude:"ativo",
   stages:[["Não iniciada",1,0],["Solicitação",1,1],["Produção",2,2],["Finalização",0,0],["Publicação",1,2],["Concluído",15,16]],
-  diag:"Um material foi concluído e Publicação passou de 1 para 2. Não iniciada zerou.",
-  note:"Os cards deste quadro mostram dias em aberto: 66 dias nos dois de Produção, 47 dias no de Solicitação, 10 e 6 dias nos de Publicação."},
+  casos:[["Solicitação","Capanha de Captação Sudoeste","47 dias em aberto"],
+         ["Produção","Video Albanisa","66 dias em aberto · prioridade Baixa"],
+         ["Produção","Lilian pt 2","66 dias em aberto · prioridade Baixa"],
+         ["Publicação","Captação Cruzeiro","10 dias em aberto"],
+         ["Publicação","Vovo","6 dias em aberto"]]},
 
  {nome:"Nova Administração",desc:"",saude:"vazio",
   stages:[["Não iniciada",3,3],["Recebimento da Documentação",0,0],["Análise Documental",0,0],["Cadastramento",0,0],["Locado/Desocupado",0,0],["Assinatura do Contrato",0,0],["Certidões Negativas",0,0],["Finalização",0,0],["Concluído",0,0]],
-  diag:"Quadro sem alteração entre as duas leituras. Continua apenas com os 3 cards de template (Versão 1.0, 2.0 e 3.0), sem administração real em andamento.",
-  note:"Os 3 cards de Não iniciada são templates."},
+  note:"Os 3 cards de Não iniciada são templates — não há administração real em andamento.",
+  casos:[["Não iniciada","Versão 1.0","card de template"],
+         ["Não iniciada","Versão 2.0","card de template"],
+         ["Não iniciada","Versão 3.0","card de template"]]},
 
  {nome:"Nova Locação",desc:"",saude:"vazio_bom",
   stages:[["Não iniciada",0,0],["Análise",0,0],["Cadastro",0,0],["Seguro Incêndio",0,0],["Preparação",0,0],["Entrega das chaves",0,0],["Troca de titularidade",0,0],["Desistência",0,0],["Concluído",7,7]],
-  diag:"Quadro sem alteração entre as duas leituras. Os 7 cards seguem em Concluído e nenhuma fase intermediária está ocupada.",
-  note:"Um dos 7 cards concluídos é template (“Nova página”). 3 comentários da Real no quadro (10/06, 15/06 e 02/07), sem resposta registrada até esta leitura."},
+  note:"Um dos 7 cards concluídos é template (“Nova página”). 3 comentários da Real no quadro (10/06, 15/06 e 02/07), sem resposta registrada até esta leitura.",
+  casos:[]},
 
  {nome:"Renovação",desc:"Processo de atualização do valor do aluguel.",saude:"critico",
   stages:[["Contratos a renovar",0,0],["Triagem",0,0],["Calcular valores",0,0],["Conversar com Inquilino",2,0],["Atualizar sistema",0,0],["Seguro Incêndio (Valor Mercado)",1,0],["Aditivo",1,2],["Atualização dos Encargos",0,0],["Pagamento do seguro",0,0],["Registro da apólice",0,1],["Revisão final",11,12],["Concluído",5,5]],
   hot:["Revisão final"],
-  diag:"Nenhum contrato foi concluído na semana: Concluído segue em 5. Revisão Final passou de 11 para 12 e concentra 12 dos 15 casos em andamento — o maior acúmulo entre todos os quadros. Conversar com Inquilino e Seguro Incêndio zeraram; Aditivo e Registro da apólice receberam cards.",
-  note:"2 comentários da Real no quadro (26/05 e 28/05), sem resposta registrada até esta leitura. Dois cards em Revisão Final estão marcados com sinal de atenção (❗ e ❓) pela própria equipe."},
+  note:"2 comentários da Real no quadro (26/05 e 28/05), sem resposta registrada até esta leitura.",
+  casos:[["Aditivo","CT 00046*02/1","IGPM"],
+         ["Aditivo","CT 00256*01/1","Preço de Mercado"],
+         ["Registro da apólice","CT 00308*04/3","Preço de Mercado"],
+         ["Revisão final","CT 00035*06/3","IGPM"],
+         ["Revisão final","CT 00409*01/4","IGPM"],
+         ["Revisão final","CT 0232*01/2","Preço de Mercado"],
+         ["Revisão final","CT 00431*01/1","IGPM"],
+         ["Revisão final","CT 0196*04/2","IGPM"],
+         ["Revisão final","CT 00037*08/2","Preço de Mercado"],
+         ["Revisão final","CT 0071*10/1","Preço de Mercado"],
+         ["Revisão final","CT 0003*06/3","IGPM"],
+         ["Revisão final","CT 00089*03/1","IGPM"],
+         ["Revisão final","CT 00050*06/1","IGPM"],
+         ["Revisão final","CT 00047*09/2","IGPM · marcado com ❓ pela equipe"],
+         ["Revisão final","CT 00428*01/1","IGPM · marcado com ❗ pela equipe"]]},
 
  {nome:"Rescisão de Locação (Desocupação)",desc:"Fluxo de encerramento do contrato de locação com o inquilino",saude:"ativo",
   stages:[["Novas Solicitações",1,2],["Vistoria",2,0],["Entrega das chaves",0,1],["Orçamento de pendências",0,0],["Levantamento de taxas",0,0],["Fechamento financeiro",1,0],["Finalizar procedimentos",0,0],["Concluído",4,6]],
-  diag:"Duas rescisões foram concluídas na semana. Vistoria e Fechamento financeiro zeraram, entrou 1 nova solicitação e 1 caso está em Entrega das chaves.",
-  note:"Os cards deste quadro mostram dias em aberto: 62 dias no de Entrega das chaves, 12 e 0 dias nos de Novas Solicitações."},
+  casos:[["Novas Solicitações","CT00367","QMSW 6 Lote 04 Kit 10 · 12 dias em aberto"],
+         ["Novas Solicitações","CT00417","SQN 111 Bloco H apto 502 · 0 dias em aberto"],
+         ["Entrega das chaves","CT 00179","SQN 111 Bloco F APTO 306 · 62 dias em aberto"]]},
 
  {nome:"Venda",desc:"",saude:"vazio",
   stages:[["Não iniciada",1,1],["Em andamento",0,0],["Concluído",0,0]],
-  diag:"Quadro sem alteração — a Real informou que não houve movimentação desde 20/07. Continua apenas com o card de template, sem venda em andamento.",
-  note:"O único card de Não iniciada é template (“Nova página”)."}
+  note:"A Real informou que não houve movimentação desde 20/07. O único card é template.",
+  casos:[["Não iniciada","Nova página","card de template"]]}
 ];
 
 const HL={critico:"Crítico",vazio:"Vazio",vazio_bom:"Vazio (bom)",atencao:"Em atenção",ativo:"Ativo"};
@@ -246,54 +350,48 @@ const isConcl=n=>n.toLowerCase().includes("conclu");
 const isNeg=n=>NEG.some(x=>n.toLowerCase().includes(x));
 const fmtDate=iso=>{const[y,m,d]=iso.split("-");return `${d}/${m}/${y}`};
 const isLate=iso=>new Date(iso)<new Date(HOJE);
-const diasAtraso=iso=>Math.round((new Date(HOJE)-new Date(iso))/864e5);
+const atrasoD=iso=>Math.round((new Date(HOJE)-new Date(iso))/864e5);
 
-/* ---------- tarefas por responsável ---------- */
-const pessoas=[...new Set(TAREFAS.map(t=>t.resp))];
-const totalAtrasadas=TAREFAS.filter(t=>t.prazo&&isLate(t.prazo)).length;
-const emAndamento=TAREFAS.filter(t=>t.status==="Em andamento").length;
+/* ---------- tarefas ---------- */
+const PESSOAS=[...new Set(TAREFAS.map(t=>t.resp))];
+let fPessoa="", fStatus="";
 
-document.getElementById("tarefas-sub").innerHTML=
- `${TAREFAS.length} tarefas ativas (Não iniciada + Em andamento) em ${pessoas.length} responsáveis · `+
- `${emAndamento} em andamento · ${totalAtrasadas} com prazo vencido · leitura anterior: 7 tarefas em 20/07`;
+document.getElementById("tarefas-sub").textContent=
+ `${TAREFAS.length} tarefas ativas (Não iniciada + Em andamento) · ${TAREFAS.filter(t=>t.status==="Em andamento").length} em andamento · `+
+ `${TAREFAS.filter(t=>t.prazo&&isLate(t.prazo)).length} com prazo vencido · leitura anterior: 7 tarefas em 20/07`;
 
-document.getElementById("peoplegrid").innerHTML=pessoas.map(p=>{
-  const lista=TAREFAS.filter(t=>t.resp===p);
-  const atr=lista.filter(t=>t.prazo&&isLate(t.prazo)).length;
-  const and=lista.filter(t=>t.status==="Em andamento").length;
-  const rows=lista.map(t=>{
-    const meta=[];
-    meta.push(t.status);
-    if(t.prio) meta.push(`prioridade ${t.prio}`);
-    if(t.area) meta.push(t.area);
-    if(t.extra) meta.push(t.extra);
-    let prazo="";
-    if(t.prazo){
-      prazo=isLate(t.prazo)
-        ? `<span class="late">prazo ${fmtDate(t.prazo)} · ${diasAtraso(t.prazo)} dias vencido</span>`
-        : `prazo ${fmtDate(t.prazo)}`;
-    }
-    const metaStr=meta.join(" · ")+(prazo?" · "+prazo:"");
-    return `<li class="trow">
-      <span class="tdot ${t.status==="Em andamento"?'and':''}"></span>
-      <div><div class="tname">${t.tarefa}${t.nova?'<span class="newtag">NOVA</span>':''}</div>
-      <div class="tmeta">${metaStr}</div></div>
-    </li>`;
-  }).join("");
-  return `<div class="pcard person">
-    <div class="ptopbar"></div>
-    <div class="pbody">
-      <div class="ptop"><span class="pname">${p}</span>
-        <span class="vbadge v-count${atr?' late':''}">${lista.length} tarefa${lista.length>1?'s':''}</span></div>
-      <ul class="tasklist">${rows}</ul>
-    </div>
-    <div class="pfoot">${and} em andamento · ${lista.length-and} não iniciada${lista.length-and===1?'':'s'}${atr?` · <b style="color:#E0393E">${atr} com prazo vencido</b>`:' · nenhum prazo vencido'}</div>
-  </div>`;
-}).join("");
+document.getElementById("chips").innerHTML=
+ [["","Todos"],...PESSOAS.map(p=>[p,p])]
+ .map(([v,l])=>`<button class="chip${v===""?" on":""}" data-p="${v}">${l}</button>`).join("");
+
+function renderTarefas(){
+  const lista=TAREFAS.filter(t=>(!fPessoa||t.resp===fPessoa)&&(!fStatus||t.status===fStatus));
+  document.getElementById("th-tarefa").textContent=`Tarefa (${lista.length})`;
+  document.getElementById("tbody").innerHTML=lista.length? lista.map(t=>{
+    const atr=t.prazo&&isLate(t.prazo);
+    return `<tr>
+      <td><div class="t-name">${t.tarefa}${t.nova?'<span class="newtag">NOVA</span>':''}</div>
+          ${t.obs?`<div class="t-obs">${t.obs}</div>`:''}</td>
+      <td>${t.resp}</td>
+      <td><span class="pill ${t.status==="Em andamento"?"st-and":"st-nao"}">${t.status}</span></td>
+      <td>${t.prio?`<span class="pill pr-${t.prio}">${t.prio}</span>`:'<span class="dash">—</span>'}</td>
+      <td class="num">${t.prazo?fmtDate(t.prazo):'<span class="dash">—</span>'}</td>
+      <td>${atr?`<span class="atraso num">${atrasoD(t.prazo)}d</span>`:'<span class="dash">—</span>'}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="6" style="color:#94A3B8">Nenhuma tarefa com esse filtro.</td></tr>`;
+}
+document.getElementById("chips").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b)return;
+  fPessoa=b.dataset.p;
+  document.querySelectorAll("#chips .chip").forEach(c=>c.classList.toggle("on",c===b));
+  renderTarefas();
+});
+document.getElementById("fstatus").addEventListener("change",e=>{fStatus=e.target.value;renderTarefas();});
+renderTarefas();
 
 /* ---------- processos ---------- */
-function ativos(f,i){return f.stages.filter(s=>!isConcl(s[0])&&!isNeg(s[0])).reduce((a,s)=>a+s[i],0);}
-function conclu(f,i){return f.stages.filter(s=>isConcl(s[0])).reduce((a,s)=>a+s[i],0);}
+const ativos=(f,i)=>f.stages.filter(s=>!isConcl(s[0])&&!isNeg(s[0])).reduce((a,s)=>a+s[i],0);
+const conclu=(f,i)=>f.stages.filter(s=>isConcl(s[0])).reduce((a,s)=>a+s[i],0);
 
 const totalAtivos=FLOWS.reduce((a,f)=>a+ativos(f,2),0);
 const totalConcSemana=FLOWS.reduce((a,f)=>a+Math.max(0,conclu(f,2)-conclu(f,1)),0);
@@ -305,31 +403,31 @@ document.getElementById("reading").innerHTML=`
  <div class="rd"><div class="rl">Concluídos na semana</div><div class="rv g num">+${totalConcSemana}</div><div class="rs">cards que entraram em Concluído</div></div>
  <div class="rd"><div class="rl">Quadros sem alteração</div><div class="rv num">${semAlteracao}</div><div class="rs">de 11 fluxos</div></div>`;
 
-document.getElementById("procgrid").innerHTML=FLOWS.map(f=>{
+document.getElementById("procgrid").innerHTML=FLOWS.map((f,i)=>{
   const at=ativos(f,2), cc=conclu(f,2), dConc=cc-conclu(f,1);
 
   const ocupadas=f.stages.filter(s=>s[2]>0&&!isConcl(s[0]));
-  let listHTML;
-  if(ocupadas.length){
-    listHTML=`<ul class="stagelines">${ocupadas.map(s=>{
-      const hot=(f.hot||[]).includes(s[0]);
-      return `<li class="${hot?'hot':''} ${isNeg(s[0])?'tpl':''}"><span class="n num">${s[2]}</span><span class="sn">${s[0]}</span></li>`;
-    }).join("")}</ul>`;
-  }else{
-    listHTML=`<div class="bigsub" style="margin-top:9px">Nenhuma fase intermediária ocupada.</div>`;
-  }
+  const listHTML=ocupadas.length
+    ? `<ul class="stagelines">${ocupadas.map(s=>
+        `<li class="${(f.hot||[]).includes(s[0])?'hot':''} ${isNeg(s[0])?'tpl':''}"><span class="n num">${s[2]}</span><span>${s[0]}</span></li>`).join("")}</ul>`
+    : `<div class="bigsub" style="margin-top:10px">Nenhuma fase intermediária ocupada.</div>`;
 
-  const bigsub=`${cc} concluído${cc===1?'':'s'} no acumulado`;
-
-  const dl=f.stages.filter(s=>s[1]!==s[2]).map(s=>{
-    const cls=isConcl(s[0])?"done":(s[2]>s[1]?"up":"down");
-    return `<span class="dchip ${cls}">${s[0]} ${s[1]} → ${s[2]}</span>`;
-  }).join("");
+  const dl=f.stages.filter(s=>s[1]!==s[2]).map(s=>
+    `<span class="dchip ${isConcl(s[0])?'done':(s[2]>s[1]?'up':'')}">${s[0]} ${s[1]} → ${s[2]}</span>`).join("");
 
   let mvHead,mvCls;
   if(f.stages.every(s=>s[1]===s[2])){ mvHead="Sem alteração"; mvCls="mv-none"; }
   else if(dConc>0){ mvHead=`+${dConc} concluído${dConc>1?'s':''}`; mvCls="mv-pos"; }
   else { mvHead="0 concluídos"; mvCls="mv-zero"; }
+
+  const casos=f.casos||[];
+  const linkHTML=casos.length
+    ? `<div class="plink">
+         <button data-i="${i}">Ver os ${casos.length} card${casos.length>1?'s':''} ›</button>
+         <ul class="caselist" id="cl-${i}">${casos.map(c=>
+           `<li><div class="cfase">${c[0]}</div><div class="cnome">${c[1]}</div>${c[2]?`<div class="cextra">${c[2]}</div>`:''}</li>`).join("")}</ul>
+       </div>`
+    : '';
 
   return `<div class="pcard ${f.saude}">
     <div class="ptopbar"></div>
@@ -337,23 +435,31 @@ document.getElementById("procgrid").innerHTML=FLOWS.map(f=>{
       <div class="ptop"><span class="dot"></span><span class="pname">${f.nome}</span><span class="vbadge v-${f.saude}">${HL[f.saude]}</span></div>
       <div class="pdesc">${f.desc||'&nbsp;'}</div>
       <div class="prow">
-        <div class="pleft"><div class="lbl">Onde estão os casos</div>${listHTML}</div>
+        <div class="pleft"><div class="lbl">Onde estão<br>os casos</div>${listHTML}</div>
         <div class="pright">
           <div class="lbl">Em andamento</div>
           <div class="bignum num">${at}<span class="unit">${at===1?'caso':'casos'}</span></div>
-          <div class="bigsub">${bigsub}</div>
+          <div class="bigsub">${cc} concluído${cc===1?'':'s'} no acumulado</div>
         </div>
       </div>
-    </div>
-    <div class="pmove">
-      <div class="lbl">Movimento na semana · 20/07 → 27/07</div>
-      <div class="mvhead ${mvCls}">${mvHead}</div>
-      ${dl?`<div class="deltas">${dl}</div>`:''}
-      <div class="pdiag">${f.diag}</div>
-      ${f.note?`<div class="pnote">${f.note}</div>`:''}
+      <div class="pmove">
+        <div class="lbl">Movimento na semana · 20/07 → 27/07</div>
+        <div class="mvhead ${mvCls}">${mvHead}</div>
+        ${dl?`<div class="deltas">${dl}</div>`:''}
+        ${f.note?`<div class="pnote">${f.note}</div>`:''}
+      </div>
+      ${linkHTML}
     </div>
   </div>`;
 }).join("");
+
+document.getElementById("procgrid").addEventListener("click",e=>{
+  const b=e.target.closest(".plink button"); if(!b)return;
+  const ul=document.getElementById("cl-"+b.dataset.i);
+  const open=ul.classList.toggle("open");
+  const n=ul.children.length;
+  b.textContent=open?`Ocultar os ${n} card${n>1?'s':''} ‹`:`Ver os ${n} card${n>1?'s':''} ›`;
+});
 </script>
 </body>
 </html>
