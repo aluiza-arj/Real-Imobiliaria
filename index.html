@@ -11,7 +11,7 @@
     --green:#0FA968; --green-soft:#E6F6EF; --amber:#E0A106; --amber-soft:#FDF3DA;
     --red:#E0393E; --red-soft:#FCE9EA; --gray:#94A3B8; --gray-soft:#EEF1F5;
     --teal:#0E8C8C; --teal-soft:#E2F4F4;
-    --shadow:0 1px 2px rgba(16,33,64,.06),0 8px 24px rgba(16,33,64,.05);
+    --shadow:0 1px 2px rgba(16,33,64,.05),0 10px 28px rgba(16,33,64,.06);
     --side:248px;
   }
   *{box-sizing:border-box}
@@ -40,7 +40,7 @@
   .nav-item.active .ct{color:#DCEFE4}
   .side-foot{padding:16px 10px 0;font-size:10.5px;color:#4F8267;border-top:1px solid rgba(255,255,255,.08);margin-top:18px}
 
-  main{margin-left:var(--side);padding:34px 40px 72px;max-width:1120px}
+  main{margin-left:var(--side);padding:34px 40px 72px;max-width:1240px}
   .view{display:none}
   .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
   h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:6px 0 4px}
@@ -49,6 +49,15 @@
   .flag{background:var(--accent-soft);border:1px solid #BFE1CE;border-radius:10px;padding:11px 14px;
     font-size:12.5px;color:var(--accent-deep);margin-bottom:22px;line-height:1.5}
   .flag b{font-weight:800}
+
+  /* ---- faixa de leitura ---- */
+  .reading{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);padding:16px 20px;margin-bottom:14px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .rd .rl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .rd .rv{font-size:24px;font-weight:800;line-height:1.15;margin-top:5px;letter-spacing:-.02em}
+  .rd .rs{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .rv.g{color:var(--accent)}
 
   .tblwrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px}
   table{width:100%;min-width:640px;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
@@ -66,39 +75,53 @@
   .pr-none{color:var(--muted);font-size:11px}
   .late{color:var(--red);font-weight:700} .ontime{color:var(--muted)}
   .empty-cell{color:var(--gray);font-size:11px}
+  .newtag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.06em;padding:2px 6px;border-radius:5px;background:var(--accent-soft);color:var(--accent-deep);margin-left:7px;vertical-align:1px}
 
-  .health{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 0 22px}
-  .hcard{border-radius:12px;padding:15px 16px;color:#fff}
-  .hcard .v{font-size:26px;font-weight:800;line-height:1}
-  .hcard .l{font-size:11px;margin-top:6px;font-weight:600;opacity:.95;line-height:1.35}
-  .h-critico{background:var(--red)} .h-vazio{background:var(--gray)}
-  .h-vazio_bom{background:var(--teal)}
-  .h-atencao{background:var(--amber)} .h-ativo{background:var(--green)}
-
-  .procgrid{display:grid;grid-template-columns:1fr;gap:14px}
-  .pcard{background:var(--surface);border:1px solid var(--line);border-left-width:4px;border-radius:14px;
-    padding:18px 20px;box-shadow:var(--shadow)}
-  .pcard.critico{border-left-color:var(--red)} .pcard.vazio{border-left-color:var(--gray)}
-  .pcard.vazio_bom{border-left-color:var(--teal)}
-  .pcard.atencao{border-left-color:var(--amber)} .pcard.ativo{border-left-color:var(--green)}
-  .ptop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:2px}
-  .pname{font-size:14.5px;font-weight:800}
-  .pdesc{font-size:11.5px;color:var(--muted);margin-bottom:12px;min-height:14px}
-  .vbadge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;flex:none}
+  /* ---- cartões de processo ---- */
+  .procgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:16px}
+  .pcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);padding:0;overflow:hidden;display:flex;flex-direction:column}
+  .ptopbar{height:3px}
+  .critico .ptopbar{background:var(--red)} .vazio .ptopbar{background:var(--gray)}
+  .vazio_bom .ptopbar{background:var(--teal)}
+  .atencao .ptopbar{background:var(--amber)} .ativo .ptopbar{background:var(--accent)}
+  .pbody{padding:18px 20px 0}
+  .ptop{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .critico .dot{background:var(--red)} .vazio .dot{background:var(--gray)}
+  .vazio_bom .dot{background:var(--teal)}
+  .atencao .dot{background:var(--amber)} .ativo .dot{background:var(--accent)}
+  .pname{font-size:15px;font-weight:800;flex:1;min-width:0;letter-spacing:-.01em}
+  .vbadge{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;flex:none}
   .v-critico{background:var(--red-soft);color:var(--red)} .v-vazio{background:var(--gray-soft);color:#5A6474}
   .v-vazio_bom{background:var(--teal-soft);color:var(--teal)}
-  .v-atencao{background:var(--amber-soft);color:#9A6E04} .v-ativo{background:var(--green-soft);color:#2E7D46}
-  .pstats{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-bottom:12px}
-  .pstats b{color:var(--ink);font-size:13px;margin-right:3px}
-  .stagelist{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-  .stagechip{display:inline-flex;align-items:baseline;gap:5px;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:7px;white-space:nowrap}
-  .stagechip .n{font-weight:800;font-variant-numeric:tabular-nums}
-  .chip-zero{background:#F7F8FA;color:#C2CAD6}
-  .chip-neutro{background:#EEF1F5;color:#5A6474}
-  .chip-ativo{background:var(--accent-soft);color:var(--accent-deep)}
-  .chip-conclu{background:var(--green-soft);color:#2E7D46}
-  .chip-neg{background:var(--red-soft);color:var(--red)}
-  .pdiag{font-size:12px;color:var(--ink);line-height:1.5;background:#FAFBFD;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .v-atencao{background:var(--amber-soft);color:#9A6E04} .v-ativo{background:var(--accent-soft);color:var(--accent-deep)}
+  .pdesc{font-size:11.5px;color:var(--muted);margin:0 0 16px;min-height:15px;line-height:1.4}
+
+  .prow{display:flex;gap:18px;align-items:flex-start;padding-bottom:16px}
+  .pleft{flex:1;min-width:0}
+  .pright{text-align:right;flex:none;max-width:44%}
+  .lbl{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.35}
+  .stagelines{list-style:none;margin:9px 0 0;padding:0}
+  .stagelines li{display:flex;align-items:baseline;gap:8px;font-size:12px;color:var(--ink);margin-bottom:5px;line-height:1.3}
+  .stagelines .n{font-weight:800;font-variant-numeric:tabular-nums;min-width:20px;text-align:right;color:var(--accent-deep)}
+  .stagelines li.hot .n{color:var(--red)}
+  .stagelines li.tpl{color:var(--muted)}
+  .stagelines .sn{min-width:0}
+  .bignum{font-size:25px;font-weight:800;line-height:1.1;margin-top:7px;letter-spacing:-.02em}
+  .bignum .unit{font-size:13px;font-weight:600;color:var(--muted);margin-left:5px;letter-spacing:0}
+  .bigsub{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+  .pmove{border-top:1px solid var(--line);background:#FAFBFD;padding:15px 20px 18px;margin-top:auto}
+  .mvhead{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-top:7px;line-height:1.15}
+  .mv-pos{color:var(--accent)} .mv-zero{color:var(--muted)} .mv-none{color:var(--gray)}
+  .deltas{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .dchip{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:6px;background:#EDF1F6;color:#4A5568;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .dchip.up{background:var(--amber-soft);color:#8A6304}
+  .dchip.down{background:#E8EDF3;color:#4A5568}
+  .dchip.done{background:var(--accent-soft);color:var(--accent-deep)}
+  .pdiag{font-size:12px;color:var(--ink);line-height:1.5;margin-top:11px}
+  .pnote{font-size:11px;color:var(--muted);line-height:1.45;margin-top:7px;padding-top:8px;border-top:1px dashed var(--line)}
 
   @media(max-width:880px){
     .mobile-topbar{display:flex}
@@ -106,7 +129,7 @@
     body.nav-open aside{transform:translateX(0)}
     body.nav-open .overlay{display:block}
     main{margin-left:0;padding:20px 16px 56px}
-    .health{grid-template-columns:repeat(2,1fr)}
+    .reading{grid-template-columns:repeat(2,1fr);gap:14px}
     .procgrid{grid-template-columns:1fr}
     table{font-size:11.5px}
     .t-title{max-width:160px}
@@ -125,9 +148,9 @@
   <div class="brand">
     <div class="b1">Diagnóstico Operacional</div>
     <div class="b2">Real Imobiliária</div>
-    <div class="b3">Fonte: Notion (capturas de tela) · 20/07/2026</div>
+    <div class="b3">Fonte: Notion (capturas de tela) · 27/07/2026</div>
   </div>
-  <div class="nav-item active" data-view="tarefas"><span class="nm">Tarefas</span><span class="ct num">7</span></div>
+  <div class="nav-item active" data-view="tarefas"><span class="nm">Tarefas</span><span class="ct num">8</span></div>
   <div class="nav-item" data-view="fluxos"><span class="nm">Resumo dos Processos</span><span class="ct num">11</span></div>
   <div class="side-foot">Dados capturados manualmente — a Real não usa Apresenta.me, e a integração de Notion não tem acesso ao workspace da Real (acesso de convidada).</div>
 </aside>
@@ -137,7 +160,7 @@
   <div class="view" id="view-tarefas" style="display:block">
     <div class="eyebrow">Agenda · Tarefas</div>
     <h1>Tarefas</h1>
-    <div class="sub">7 tarefas ativas (Não iniciada + Em andamento) · lidas em 20/07/2026</div>
+    <div class="sub">8 tarefas ativas (Não iniciada + Em andamento) · lidas em 27/07/2026 · leitura anterior: 7 em 20/07</div>
     <div class="tblwrap">
     <table>
       <thead><tr><th>Status</th><th>Responsável</th><th>Tarefa</th><th>Prioridade</th><th>Área</th><th>Prazo</th></tr></thead>
@@ -149,9 +172,12 @@
   <div class="view" id="view-fluxos">
     <div class="eyebrow">Construção · Processos</div>
     <h1>Resumo dos Processos</h1>
-    <div class="sub">11 fluxos mapeados no Notion da Real · leitura por volume/concentração (sem histórico de dias parado ainda) · 20/07/2026</div>
-    <div class="flag"><b>Sobre esta leitura:</b> classificação de saúde por volume e concentração de cards por fase — ainda não há uma leitura anterior para comparar dias parado. A partir da próxima atualização passamos a acompanhar isso.</div>
-    <div class="health" id="health"></div>
+    <div class="sub">11 fluxos mapeados no Notion da Real · leitura de 27/07/2026 comparada com a de 20/07/2026</div>
+
+    <div class="reading" id="reading"></div>
+
+    <div class="flag"><b>Sobre esta leitura:</b> segunda leitura dos quadros. Cada cartão mostra onde os casos estão hoje e o que mudou em relação a 20/07. As contagens incluem cards de template (“Versão 1.0”, “Nova página”, “Modelo 1”), sinalizados no cartão do fluxo correspondente.</div>
+
     <div class="procgrid" id="procgrid"></div>
   </div>
 
@@ -159,62 +185,84 @@
 
 <script>
 const TAREFAS=[
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Corrigir SEO das Páginas Do Blog",prio:"Baixa",area:"Marketing",prazo:null},
- {status:"Em andamento",resp:"Vitor Rodrigues",tarefa:"Relatório IPTU",prio:"Média",area:"",prazo:"2026-04-14"},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Refazer fotos venda kit Avenida Shopping",prio:"Baixa",area:"Marketing",prazo:null},
- {status:"Em andamento",resp:"Valter",tarefa:"Registro da Marca ©",prio:"Média",area:"Jurídico",prazo:null},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Linkedin",prio:"Média",area:"Marketing",prazo:null},
- {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Contrato locação",prio:"",area:"",prazo:null},
- {status:"Em andamento",resp:"Vitor Rodrigues +1",tarefa:"Revisar Contrato Administração",prio:"Baixa",area:"Jurídico",prazo:null}
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Corrigir SEO das Páginas Do Blog",prio:"Baixa",area:"Marketing",prazo:null,nova:false},
+ {status:"Em andamento",resp:"Vitor Rodrigues",tarefa:"Relatório IPTU",prio:"Média",area:"",prazo:"2026-04-14",nova:false},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Refazer fotos venda kit Avenida Shopping",prio:"Baixa",area:"Marketing",prazo:null,nova:false},
+ {status:"Em andamento",resp:"Valter",tarefa:"Registro da Marca ©",prio:"Média",area:"Jurídico",prazo:null,nova:false},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Criar pagina Boas Vindas Locatario Guia",prio:"Baixa",area:"",prazo:null,nova:true},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Linkedin",prio:"Média",area:"Marketing",prazo:null,nova:false},
+ {status:"Não iniciada",resp:"Vitor Rodrigues",tarefa:"Atualizar Contrato locação",prio:"",area:"",prazo:null,nova:false},
+ {status:"Em andamento",resp:"Vitor Rodrigues +1",tarefa:"Revisar Contrato Administração",prio:"Baixa",area:"Jurídico",prazo:null,nova:false}
 ];
 
+/* stages: [nome, contagem em 20/07, contagem em 27/07] */
 const FLOWS=[
  {nome:"Anúncio Comercial",desc:"Fluxo dos anúncios dos imóveis",saude:"ativo",
-  stages:[["Não iniciada",0],["Nova Solicitação",0],["Avaliação Técnica",0],["Cadastro e Anúncio",0],["Finalização Anúncio",2],["Atualização do Marketing",1],["Concluído",6]],
-  diag:"2 em Finalização de Anúncio, 1 em Atualização do Marketing, 6 concluídos nesta leitura."},
+  stages:[["Não iniciada",0,0],["Nova Solicitação",0,0],["Avaliação Técnica",0,0],["Cadastro e Anúncio",0,0],["Finalização Anúncio",2,2],["Atualização do Marketing",1,1],["Concluído",6,7]],
+  diag:"Um anúncio foi concluído na semana. As fases de Finalização e Atualização do Marketing seguem com a mesma quantidade de cards da leitura anterior."},
+
  {nome:"Captação",desc:"Processo para captação de imóveis",saude:"atencao",
-  stages:[["Não iniciada",3],["Novo Lead",0],["Primeiro Contato",11],["Follow-up",5],["Encerramento",0],["Qualificado",0],["Desqualificado",3],["Concluído",0]],
-  diag:"11 parados em Primeiro Contato e 5 em Follow-up — nenhum avançou para Qualificado ou Concluído nesta leitura."},
+  stages:[["Não iniciada",3,3],["Novo Lead",0,0],["Primeiro Contato",11,13],["Follow-up",5,5],["Encerramento",0,0],["Qualificado",0,0],["Desqualificado",3,3],["Concluído",0,0]],
+  hot:["Primeiro Contato"],
+  diag:"Primeiro Contato passou de 11 para 13. Follow-up continua com 5. Qualificado e Concluído seguem zerados nas duas leituras.",
+  note:"Inclui 1 card de template (“Modelo 1”) em Não iniciada. Desqualificado: 3 cards, sem alteração."},
+
  {nome:"Comprador (Funil de Vendas)",desc:"",saude:"atencao",
-  stages:[["Não iniciada",3],["Coleta de Perfil",2],["Busca de Imóveis",1],["Aguardando Feedback",0],["Visitas",1],["Perdido",0],["Concluído",0]],
-  diag:"7 leads no funil nesta leitura, nenhum concluído."},
+  stages:[["Não iniciada",3,3],["Coleta de Perfil",2,4],["Busca de Imóveis",1,1],["Aguardando Feedback",0,0],["Visitas",1,1],["Perdido",0,0],["Concluído",0,0]],
+  diag:"Coleta de Perfil passou de 2 para 4. As demais fases seguem iguais e nenhum lead foi concluído nas duas leituras.",
+  note:"Inclui 1 card de template (“Versão 1”) em Não iniciada."},
+
  {nome:"Inadimplência",desc:"Processos dos inquilinos que estão com aluguel atrasado.",saude:"atencao",
-  stages:[["Cobranças a fazer",0],["Primeiro Contato",0],["Segundo Contato",1],["Terceiro Contato",1],["Quarto Contato",0],["Quinto Contato",0],["Sexto Contato",0],["Garantia Acionada",0],["Jurídico",1],["Concluído",1]],
-  diag:"1 caso em fase Jurídico. 2 comentários da Real registrados no board (18/06 e 02/07), sem resposta registrada até a leitura."},
+  stages:[["Cobranças a fazer",0,0],["Primeiro Contato",0,0],["Segundo Contato",1,0],["Terceiro Contato",1,1],["Quarto Contato",0,0],["Quinto Contato",0,0],["Sexto Contato",0,0],["Garantia Acionada",0,0],["Jurídico",1,1],["Concluído",1,2]],
+  hot:["Jurídico"],
+  diag:"Dois casos aparecem como concluídos, com registro de pagamento no card. O Segundo Contato zerou. Segue 1 caso em Jurídico — o card registra pendência desde janeiro de 2026 e processo de despejo aberto.",
+  note:"2 comentários da Real no quadro (18/06 e 02/07), sem resposta registrada até esta leitura."},
+
  {nome:"Manutenção",desc:"Fluxo dos pedidos de manutenções e reparos",saude:"ativo",
-  stages:[["Não iniciada",1],["Orçamento",1],["Aprovação do Proprietário",2],["Agendamento",0],["Verificação",0],["Financeiro",0],["Concluído",10]],
-  diag:"10 concluídos, 4 em andamento (orçamento/aprovação) nesta leitura."},
+  stages:[["Não iniciada",1,2],["Orçamento",1,3],["Aprovação do Proprietário",2,2],["Agendamento",0,0],["Verificação",0,0],["Financeiro",0,0],["Concluído",10,13]],
+  diag:"Três pedidos foram concluídos na semana. Orçamento passou de 1 para 3 e Aprovação do Proprietário segue com 2.",
+  note:"Inclui 1 card de template (“Nova página”) em Não iniciada."},
+
  {nome:"Marketing",desc:"",saude:"ativo",
-  stages:[["Não iniciada",1],["Solicitação",1],["Produção",2],["Finalização",0],["Publicação",1],["Concluído",15]],
-  diag:"15 concluídos, 5 em produção/publicação nesta leitura."},
+  stages:[["Não iniciada",1,0],["Solicitação",1,1],["Produção",2,2],["Finalização",0,0],["Publicação",1,2],["Concluído",15,16]],
+  diag:"Um material foi concluído e Publicação passou de 1 para 2. Não iniciada zerou.",
+  note:"Os cards deste quadro mostram dias em aberto: 66 dias nos dois de Produção, 47 dias no de Solicitação, 10 e 6 dias nos de Publicação."},
+
  {nome:"Nova Administração",desc:"",saude:"vazio",
-  stages:[["Não iniciada",3],["Recebimento da Documentação",0],["Análise Documental",0],["Cadastramento",0],["Locado/Desocupado",0],["Assinatura do Contrato",0],["Certidões Negativas",0],["Finalização",0],["Concluído",0]],
-  diag:"Só os 3 cards de template (Versão 1.0/2.0/3.0) — sem administração real em andamento nesta leitura."},
+  stages:[["Não iniciada",3,3],["Recebimento da Documentação",0,0],["Análise Documental",0,0],["Cadastramento",0,0],["Locado/Desocupado",0,0],["Assinatura do Contrato",0,0],["Certidões Negativas",0,0],["Finalização",0,0],["Concluído",0,0]],
+  diag:"Quadro sem alteração entre as duas leituras. Continua apenas com os 3 cards de template (Versão 1.0, 2.0 e 3.0), sem administração real em andamento.",
+  note:"Os 3 cards de Não iniciada são templates."},
+
  {nome:"Nova Locação",desc:"",saude:"vazio_bom",
-  stages:[["Não iniciada",0],["Análise",0],["Cadastro",0],["Seguro Incêndio",0],["Preparação",0],["Entrega das chaves",0],["Troca de titularidade",0],["Desistência",0],["Concluído",7]],
-  diag:"7 concluídos, nenhum caso parado em fase intermediária. 3 comentários da Real registrados no board."},
+  stages:[["Não iniciada",0,0],["Análise",0,0],["Cadastro",0,0],["Seguro Incêndio",0,0],["Preparação",0,0],["Entrega das chaves",0,0],["Troca de titularidade",0,0],["Desistência",0,0],["Concluído",7,7]],
+  diag:"Quadro sem alteração entre as duas leituras. Os 7 cards seguem em Concluído e nenhuma fase intermediária está ocupada.",
+  note:"Um dos 7 cards concluídos é template (“Nova página”). 3 comentários da Real no quadro (10/06, 15/06 e 02/07), sem resposta registrada até esta leitura."},
+
  {nome:"Renovação",desc:"Processo de atualização do valor do aluguel.",saude:"critico",
-  stages:[["Contratos a renovar",0],["Triagem",0],["Calcular valores",0],["Conversar com Inquilino",2],["Atualizar sistema",0],["Seguro Incêndio (Valor Mercado)",1],["Aditivo",1],["Atualização dos Encargos",0],["Pagamento do seguro",0],["Registro da apólice",0],["Revisão final",11],["Concluído",5]],
-  diag:"11 dos 20 casos ativos concentrados em Revisão Final — maior acúmulo do board. 2 comentários da Real registrados."},
+  stages:[["Contratos a renovar",0,0],["Triagem",0,0],["Calcular valores",0,0],["Conversar com Inquilino",2,0],["Atualizar sistema",0,0],["Seguro Incêndio (Valor Mercado)",1,0],["Aditivo",1,2],["Atualização dos Encargos",0,0],["Pagamento do seguro",0,0],["Registro da apólice",0,1],["Revisão final",11,12],["Concluído",5,5]],
+  hot:["Revisão final"],
+  diag:"Nenhum contrato foi concluído na semana: Concluído segue em 5. Revisão Final passou de 11 para 12 e concentra 12 dos 15 casos em andamento — o maior acúmulo entre todos os quadros. Conversar com Inquilino e Seguro Incêndio zeraram; Aditivo e Registro da apólice receberam cards.",
+  note:"2 comentários da Real no quadro (26/05 e 28/05), sem resposta registrada até esta leitura. Dois cards em Revisão Final estão marcados com sinal de atenção (❗ e ❓) pela própria equipe."},
+
  {nome:"Rescisão de Locação (Desocupação)",desc:"Fluxo de encerramento do contrato de locação com o inquilino",saude:"ativo",
-  stages:[["Novas Solicitações",1],["Vistoria",2],["Entrega das chaves",0],["Orçamento de pendências",0],["Levantamento de taxas",0],["Fechamento financeiro",1],["Finalizar procedimentos",0],["Concluído",4]],
-  diag:"4 concluídos, todos os casos ativos sob responsabilidade de Patrícia nesta leitura."},
+  stages:[["Novas Solicitações",1,2],["Vistoria",2,0],["Entrega das chaves",0,1],["Orçamento de pendências",0,0],["Levantamento de taxas",0,0],["Fechamento financeiro",1,0],["Finalizar procedimentos",0,0],["Concluído",4,6]],
+  diag:"Duas rescisões foram concluídas na semana. Vistoria e Fechamento financeiro zeraram, entrou 1 nova solicitação e 1 caso está em Entrega das chaves.",
+  note:"Os cards deste quadro mostram dias em aberto: 62 dias no de Entrega das chaves, 12 e 0 dias nos de Novas Solicitações."},
+
  {nome:"Venda",desc:"",saude:"vazio",
-  stages:[["Não iniciada",1],["Em andamento",0],["Concluído",0]],
-  diag:"Só o card de template (\"Nova página\") — sem venda em andamento nesta leitura."}
+  stages:[["Não iniciada",1,1],["Em andamento",0,0],["Concluído",0,0]],
+  semPrint:true,
+  diag:"Quadro sem alteração — a Real informou que não houve movimentação desde 20/07. Continua apenas com o card de template, sem venda em andamento.",
+  note:"O único card de Não iniciada é template (“Nova página”)."}
 ];
 
 const HL={critico:"Crítico",vazio:"Vazio",vazio_bom:"Vazio (bom)",atencao:"Em atenção",ativo:"Ativo"};
+const NEG=["desqualificado","perdido","desistência","encerramento"];
+const isConcl=n=>n.toLowerCase().includes("conclu");
+const isNeg=n=>NEG.some(x=>n.toLowerCase().includes(x));
 
-function fmtDate(iso){
-  if(!iso)return null;
-  const [y,m,d]=iso.split("-");
-  return `${d}/${m}/${y}`;
-}
-function isLate(iso){
-  if(!iso)return false;
-  return new Date(iso) < new Date("2026-07-20");
-}
+function fmtDate(iso){const [y,m,d]=iso.split("-");return `${d}/${m}/${y}`;}
+function isLate(iso){return new Date(iso) < new Date("2026-07-27");}
 
 document.getElementById("tarefas-body").innerHTML=TAREFAS.map(t=>{
   const stCls=t.status==="Em andamento"?"st-and":"st-nao";
@@ -227,43 +275,77 @@ document.getElementById("tarefas-body").innerHTML=TAREFAS.map(t=>{
   return `<tr>
     <td><span class="badge ${stCls}">${t.status}</span></td>
     <td>${t.resp}</td>
-    <td class="t-title">${t.tarefa}</td>
+    <td class="t-title">${t.tarefa}${t.nova?'<span class="newtag">NOVA</span>':''}</td>
     <td>${t.prio?`<span class="badge ${prCls}">${t.prio}</span>`:'<span class="empty-cell">—</span>'}</td>
     <td>${t.area||'<span class="empty-cell">—</span>'}</td>
     <td>${prazoHTML}</td>
   </tr>`;
 }).join("");
 
-const hcount={critico:0,vazio:0,vazio_bom:0,atencao:0,ativo:0};
-FLOWS.forEach(f=>hcount[f.saude]++);
-document.getElementById("health").innerHTML=[
- ["critico","Crítico","maior concentração/gargalo"],
- ["atencao","Em atenção","acúmulo sem avanço"],
- ["ativo","Ativos","movimento saudável"],
- ["vazio_bom","Vazio (bom)","sem saídas pendentes"],
- ["vazio","Vazio","sem cards reais"]
-].map(([k,l,s])=>`<div class="hcard h-${k}"><div class="v num">${hcount[k]}</div><div class="l">${l}<br>${s}</div></div>`).join("");
+/* ---------- métricas ---------- */
+function ativos(f,i){return f.stages.filter(s=>!isConcl(s[0])&&!isNeg(s[0])).reduce((a,s)=>a+s[i],0);}
+function conclu(f,i){return f.stages.filter(s=>isConcl(s[0])).reduce((a,s)=>a+s[i],0);}
 
-function stageCat(name,count){
-  const n=name.toLowerCase();
-  if(count===0)return "zero";
-  if(n.includes("conclu"))return "conclu";
-  if(n.includes("desist")||n.includes("perdid")||n.includes("desqualific"))return "neg";
-  if(n.includes("não inici"))return "neutro";
-  return "ativo";
-}
+const totalAtivos=FLOWS.reduce((a,f)=>a+ativos(f,2),0);
+const totalConcSemana=FLOWS.reduce((a,f)=>a+Math.max(0,conclu(f,2)-conclu(f,1)),0);
+const semAlteracao=FLOWS.filter(f=>f.stages.every(s=>s[1]===s[2])).length;
+
+document.getElementById("reading").innerHTML=`
+ <div class="rd"><div class="rl">Leitura</div><div class="rv">27/07/2026</div><div class="rs">anterior: 20/07/2026</div></div>
+ <div class="rd"><div class="rl">Casos em andamento</div><div class="rv num">${totalAtivos}</div><div class="rs">nos 11 quadros</div></div>
+ <div class="rd"><div class="rl">Concluídos na semana</div><div class="rv g num">+${totalConcSemana}</div><div class="rs">cards que entraram em Concluído</div></div>
+ <div class="rd"><div class="rl">Quadros sem alteração</div><div class="rv num">${semAlteracao}</div><div class="rs">de 11 fluxos</div></div>`;
 
 document.getElementById("procgrid").innerHTML=FLOWS.map(f=>{
-  const total=f.stages.reduce((a,s)=>a+s[1],0);
-  const concl=f.stages.filter(s=>s[0].toLowerCase().includes("conclu")).reduce((a,s)=>a+s[1],0);
-  const ativos=total-concl;
-  const chips=f.stages.map(([n,c])=>`<span class="stagechip chip-${stageCat(n,c)}"><span class="n">${c}</span>${n}</span>`).join("");
+  const at=ativos(f,2), cc=conclu(f,2), ccPrev=conclu(f,1), dConc=cc-ccPrev;
+
+  /* fases ocupadas hoje (sem concluído) */
+  const ocupadas=f.stages.filter(s=>s[2]>0&&!isConcl(s[0]));
+  let listHTML;
+  if(ocupadas.length){
+    listHTML=`<ul class="stagelines">${ocupadas.map(s=>{
+      const hot=(f.hot||[]).includes(s[0]);
+      const tpl=isNeg(s[0]);
+      return `<li class="${hot?'hot':''} ${tpl?'tpl':''}"><span class="n num">${s[2]}</span><span class="sn">${s[0]}</span></li>`;
+    }).join("")}</ul>`;
+  }else{
+    listHTML=`<div class="bigsub" style="margin-top:9px">Nenhuma fase intermediária ocupada.</div>`;
+  }
+
+  const bigsub=`${cc} concluído${cc===1?'':'s'} no acumulado`;
+
+  /* deltas */
+  const dl=f.stages.filter(s=>s[1]!==s[2]).map(s=>{
+    const up=s[2]>s[1], cls=isConcl(s[0])?"done":(up?"up":"down");
+    return `<span class="dchip ${cls}">${s[0]} ${s[1]} → ${s[2]}</span>`;
+  }).join("");
+
+  let mvHead,mvCls;
+  if(f.stages.every(s=>s[1]===s[2])){ mvHead="Sem alteração"; mvCls="mv-none"; }
+  else if(dConc>0){ mvHead=`+${dConc} concluído${dConc>1?'s':''}`; mvCls="mv-pos"; }
+  else { mvHead="0 concluídos"; mvCls="mv-zero"; }
+
   return `<div class="pcard ${f.saude}">
-    <div class="ptop"><div class="pname">${f.nome}</div><span class="vbadge v-${f.saude}">${HL[f.saude]}</span></div>
-    <div class="pdesc">${f.desc||''}</div>
-    <div class="pstats"><div><b>${total}</b>total</div><div><b>${ativos}</b>ativos</div><div><b>${concl}</b>concluídos</div></div>
-    <div class="stagelist">${chips}</div>
-    <div class="pdiag">${f.diag}</div>
+    <div class="ptopbar"></div>
+    <div class="pbody">
+      <div class="ptop"><span class="dot"></span><span class="pname">${f.nome}</span><span class="vbadge v-${f.saude}">${HL[f.saude]}</span></div>
+      <div class="pdesc">${f.desc||'&nbsp;'}</div>
+      <div class="prow">
+        <div class="pleft"><div class="lbl">Onde estão os casos</div>${listHTML}</div>
+        <div class="pright">
+          <div class="lbl">Em andamento</div>
+          <div class="bignum num">${at}<span class="unit">${at===1?'caso':'casos'}</span></div>
+          <div class="bigsub">${bigsub}</div>
+        </div>
+      </div>
+    </div>
+    <div class="pmove">
+      <div class="lbl">Movimento na semana · 20/07 → 27/07</div>
+      <div class="mvhead ${mvCls}">${mvHead}</div>
+      ${dl?`<div class="deltas">${dl}</div>`:''}
+      <div class="pdiag">${f.diag}</div>
+      ${f.note?`<div class="pnote">${f.note}</div>`:''}
+    </div>
   </div>`;
 }).join("");
 
